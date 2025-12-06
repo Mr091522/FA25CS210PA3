@@ -117,33 +117,35 @@ void printPath(pair<int,int> exitcell,
 // STUDENTS IMPLEMENT DFS HERE
 // Add arguments, return type, and logic
 // ----------------------------------------------------------
-  bool dfs(int r, int c, //added
-      const vector<vector<int>>& maze, //added
-      vector<vector<bool>>& visited, //added
-      vector<vector<int>>& parent_r, //added
-      vector<vector<int>>& parent_c, //added
-      int exit_r, int exit_c) //added
+  bool dfs(int r, int c, // This is going to be the current rows and collums we need
+      const vector<vector<int>>& maze, //this code is the maze grid
+      vector<vector<bool>>& visited, //this will help wiht the tracks vistied
+      vector<vector<int>>& parent_r, //Now this part is going to be the parent code
+      vector<vector<int>>& parent_c, //Now this will be the parent column
+      int exit_r, int exit_c) // This will be the exit
 {
     //this will help with the maze and its dimensions and boundaries
     int N = maze.size(); // This is the rows
     int M = maze[0].size(); // This is the colums
 
+    //now this will be the out of bounds part of the code that is asked
     if (r < 0 || r >= N || c < 0 || c >= M) {
-        return false ;
+        return false ; //    //Now if r or c come outside the code will print invalid
     }
+    //This will check the walls that are up
     if (maze[r][c] == 1) {
-        return false ;
+        return false ; //So here the code needed contanting 1 are "Wall, DFS cannot move here" as stated in output gudie
     }
-    // Your code here... this code will check the bounds if the r or c fall out of range then it will say so
+    //  this code will check the bounds if the r or c fall out of range then it will say so
     if (visited [r][c]) {
-        return false ;
+        return false ; // This code will stop the code from looping
     }
-        // this will now check the wall now if the wall is (1) it will not move into
+        // this code will mark the cells that have been visited
         visited [r][c] = true;
         // This will see what has already been visited, it will check as stated before to stop and avoid infinite loops
+        //Now this code will check the exit as needed
         if (r == exit_r && c == exit_c) {
-            //this will make sure it is marked as visited this will help so it wont be revisted
-
+        //If it is reached then it will say true
             return true;
         }
         //This will check if everything worked properly and check if we exit the maze
@@ -155,7 +157,7 @@ void printPath(pair<int,int> exitcell,
         for (int k = 0; k < 4; k++) {
             int nr = r + dr[k]; // this is row
             int nc = c + dc[k];// this is colloum
-
+            //This will do the out of bound checks for neighbros as neede
             if (nr < 0 || nr >= N || nc < 0 || nc >= M) {
                 continue;
             }
@@ -220,7 +222,9 @@ void printPath(pair<int,int> exitcell,
         // STUDENT WORK:
         // Call your DFS, track visited, and fill parent_r and parent_c
         // ------------------------------------------------------
-        // wokr on this
+        // this will set up everything
+        //marks points as needed
+       //will stop when the path is reached
         parent_r[ent_r][ent_c] = ent_r;
         parent_c[ent_r][ent_c] = ent_c;
 
@@ -234,11 +238,13 @@ void printPath(pair<int,int> exitcell,
         // STUDENT WORK:
         // If found, print the path
         // ------------------------------------------------------
+        // Will use the r and c parernt walk back also uses reverse.
+        //
         if (found) {
             printPath(exitcell, parent_r, parent_c, ent_r, ent_c);
         } else {
             cout << "\nNo path exists.\n";
         }
 
-        return 0;
+        return 0; // this will end program
     }
